@@ -1,0 +1,34 @@
+{
+  "name": "01ive-lacause-npm-demo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@01ive-co-jp/la-cause-core": "0.0.18",
+    "@aws-amplify/auth": "^6.13.3",
+    "@aws-amplify/core": "^6.12.3",
+    "@aws-amplify/pubsub": "^6.1.59",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.840.0",
+    "@aws-sdk/signature-v4": "^3.370.0",
+    "@aws-sdk/types": "^3.840.0",
+    "@aws-sdk/util-utf8-browser": "^3.259.0",
+    "aws-amplify": "^6.15.3",
+    "mqtt": "^5.13.2",
+    "next": "^15.5.7",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
