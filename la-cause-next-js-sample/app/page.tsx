@@ -17,10 +17,8 @@ import {
  * 1. Authentication with credentials
  * 2. IoT connectivity for publishing data streams
  * 3. Camera device selection and management
- * 4. Display success/failed status for data transmission
+ * 4. Display success/failed status for data dispatch (data delivery must be confirmed via API).
  *
- * Note: The core library does NOT retrieve emotion data from AWS.
- * It only sends data and reports success or failure.
  */
 export default function DemoPage() {
   // Authentication state
@@ -498,11 +496,11 @@ export default function DemoPage() {
                 </div>
               )}
 
-              {/* Data Transmission Status */}
+              {/* Data Dispatch Status */}
               {isAuthenticated && processingState.modelStatus !== "idle" && (
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                   <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                    Data Transmission Status
+                    Data Dispatch Status
                   </h3>
                   <div className="space-y-4">
                     {/* Main Status Display */}
@@ -517,15 +515,12 @@ export default function DemoPage() {
                           : "border-gray-200"
                       }`}
                     >
-                      <div className={`text-3xl font-bold ${status.color}`}>
-                        {status.text}
-                      </div>
                       <div className="text-sm text-gray-600 mt-2">
                         {processingState.iotPublishResult === null
                           ? "Data will be sent every 10 seconds during processing"
                           : processingState.iotPublishResult === 1
-                          ? "Data successfully sent to AWS IoT"
-                          : "Failed to send data to AWS IoT"}
+                          ? "Data dispatched. Please verify delivery through your API."
+                          : "Unable to send data. Please check your internet connection and device date and time settings."}
                       </div>
                     </div>
                   </div>
