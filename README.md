@@ -48,7 +48,7 @@ npm run dev
 2. `package.json` に以下の依存関係を追加します：
 
 ```
-    "@01ive-co-jp/la-cause-core": "^0.0.20",
+    "@01ive-co-jp/la-cause-core": "^0.0.21",
     "@aws-amplify/auth": "^6.13.3",
     "@aws-amplify/core": "^6.12.3",
     "@aws-amplify/pubsub": "^6.1.59",
@@ -234,7 +234,7 @@ npm run dev
 2. Add the following dependencies to your `package.json`:
 
 ```
-    "@01ive-co-jp/la-cause-core": "^0.0.20",
+    "@01ive-co-jp/la-cause-core": "^0.0.21",
     "@aws-amplify/auth": "^6.13.3",
     "@aws-amplify/core": "^6.12.3",
     "@aws-amplify/pubsub": "^6.1.59",
