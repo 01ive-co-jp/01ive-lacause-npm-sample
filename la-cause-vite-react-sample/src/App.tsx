@@ -4,7 +4,6 @@ import {
   useAuth,
   useProcessingOrchestrator,
   useIoT,
-  buildTopicWithCompanyId,
   IOT_TOPIC_PREFIX,
 } from "@01ive-co-jp/la-cause-core";
 
@@ -63,7 +62,7 @@ export default function App() {
   });
 
   // Use the IoT hook (handles data transmission automatically in background)
-  const { actions: iotActions } = useIoT({
+  useIoT({
     topicPrefix: IOT_TOPIC_PREFIX,
     isAuthenticated: isAuthenticated,
     userInfo: user || undefined,
@@ -107,6 +106,40 @@ export default function App() {
       console.error("Failed to switch camera:", error);
     }
   };
+
+  // --- PiP recording-status wiring ---
+  // Track connectivity so the PiP icon warns while offline
+  const [isOnline, setIsOnline] = useState(() =>
+    typeof navigator === "undefined" ? true : navigator.onLine
+  );
+
+  useEffect(() => {
+    const goOnline = () => setIsOnline(true);
+    const goOffline = () => setIsOnline(false);
+    window.addEventListener("online", goOnline);
+    window.addEventListener("offline", goOffline);
+    return () => {
+      window.removeEventListener("online", goOnline);
+      window.removeEventListener("offline", goOffline);
+    };
+  }, []);
+
+  // The app decides what "recording" means; the library only displays it.
+  // navigator.onLine alone is unreliable (it reflects interface state, not
+  // internet reachability; a VPN or virtual interface keeps it true), so the
+  // actual send outcome also drives the icon: iotPublishResult turns 0
+  // within one cycle when sending really fails, with the cause in iotError.
+  // Note this only reports that data was sent, not that it arrived; arrival
+  // needs to be confirmed through the provided API.
+  const publishOk = processingState.iotPublishResult !== 0;
+  const recordingStatus = isOnline && publishOk;
+  useEffect(() => {
+    processingActions.setRecordingStatus(recordingStatus);
+  }, [
+    recordingStatus,
+    processingState.orchestratorInitialized,
+    processingActions.setRecordingStatus,
+  ]);
 
   // Auto-advance to next step after successful actions
   useEffect(() => {
