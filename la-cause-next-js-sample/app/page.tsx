@@ -37,9 +37,7 @@ export default function DemoPage() {
     isAuthenticated,
     user,
     error: authError,
-  } = useAuth({
-    fallbackCompanyId: "internal",
-  });
+  } = useAuth();
 
   // Video source configuration
   const videoSource = React.useMemo(
@@ -58,6 +56,10 @@ export default function DemoPage() {
     userInfo: user || undefined,
     isAuthenticated: isAuthenticated,
     videoSource: videoSource,
+    workCondition: "Desk work",
+    workSpace: "Office",
+    processingFps: 30, // Frames per second (13–30).
+    emotionResultInterval: 10000, // Request a measurement every 10 seconds.
     pipConfig: {
       enabled: true,
       autoEnableOnHidden: false,
@@ -180,6 +182,9 @@ export default function DemoPage() {
                 </h1>
                 <p className="text-sm text-gray-500 mt-1">
                   Data transmission only - no emotion data retrieval
+                </p>
+                <p className="text-xs text-gray-500 mt-1" data-testid="core-version">
+                  Core {process.env.NEXT_PUBLIC_CORE_VERSION}
                 </p>
               </div>
               {isAuthenticated && (
@@ -551,7 +556,7 @@ export default function DemoPage() {
                     >
                       <div className="text-sm text-gray-600 mt-2">
                         {processingState.iotPublishResult === null
-                          ? "Data will be sent every 10 seconds during processing"
+                          ? "Measurements are requested every 10 seconds. Results may arrive less often when the device or connection is busy."
                           : processingState.iotPublishResult === 1
                           ? "Data dispatched. Please verify delivery through your API."
                           : "Unable to send data. Please check your internet connection and device date and time settings."}

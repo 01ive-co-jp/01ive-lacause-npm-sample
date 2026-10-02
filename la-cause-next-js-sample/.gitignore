@@ -42,3 +42,6 @@ next-env.d.ts
 
 .npmrc
 .package-lock.json
+
+# Local library test packages
+*.tgz
